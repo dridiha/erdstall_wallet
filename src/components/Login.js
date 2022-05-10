@@ -16,7 +16,7 @@ export default function Login(){
     };
 
     return(
-        <div className='m-5' style={flex}>
+        <div className='m-5 ms-5' style={flex}>
             <Row className='mb-5'>
                 <Image src='https://polycry.pt/wp-content/uploads/2022/02/Screenshot-2022-01-24-131338.png' alt='Erdstall'
                     className='w-100 '
@@ -25,18 +25,18 @@ export default function Login(){
                 </Image>
             </Row>
             
-            <Row className='mt-3 w-25'>
+            <Row className='mt-3 w-75'>
                 <Button variant='primary' >Create Wallet</Button>
             </Row>
-            <Row className='mt-3 w-25'>
+            <Row className='mt-3 w-75'>
                 <Button variant='secondary'
                     onClick={(e) => {
-                        setDisabled(true);
+                        setDisabled((disabled^true) === 1)
                     }}
                 >Import Wallet</Button>
             </Row>
 
-            {(disabled) && <div className='w-25'>
+            {(disabled) && <div className='w-75'>
                 <Row>
                     <Form className='mt-3'>
                         <Form.Group>
