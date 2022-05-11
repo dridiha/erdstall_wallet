@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import {Button, Form, Image, Row} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Logo from './Logo';
+import Contact from './Contact';
 
 
 export default function Login(){
     const [passPhrase, setPassPhrase] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [nextButton, setNextButton] = useState(false);
-    
+    let navigate = useNavigate();
+
 
     const flex = {
         display: 'flex',
@@ -16,19 +20,23 @@ export default function Login(){
     };
 
     return(
-        <div className='m-5 ms-5' style={flex}>
-            <Row className='mb-5'>
-                <Image src='https://polycry.pt/wp-content/uploads/2022/02/Screenshot-2022-01-24-131338.png' alt='Erdstall'
-                    className='w-100 '
-                >
+        
 
-                </Image>
-            </Row>
+    
+        <div className='m-5 ms-5' style={flex}>
+        
+
             
-            <Row className='mt-3 w-75'>
-                <Button variant='primary' >Create Wallet</Button>
+            <Logo />
+            <Row className='mt-3 w-75 shadow-4'>
+                <Button variant='primary'
+                    onClick={(e) => {
+                        navigate('/createwallet');
+                    }}
+                 >
+                    Create Wallet</Button>
             </Row>
-            <Row className='mt-3 w-75'>
+            <Row className='mt-3 w-75 shadow-4'>
                 <Button variant='secondary'
                     onClick={(e) => {
                         setDisabled((disabled^true) === 1)
@@ -40,7 +48,7 @@ export default function Login(){
                 <Row>
                     <Form className='mt-3'>
                         <Form.Group>
-                            <Form.Control className='' type='text' placeholder='passphrase'
+                            <Form.Control className='shadow-4' type='text' placeholder='passphrase'
                             onChange={(e) => {
                                 setPassPhrase(e.target.value);
                                 if (e.value !== ""){
@@ -55,10 +63,18 @@ export default function Login(){
                     </Form>
                     
                 </Row>
-                <Row className='mt-3 ms-0 me-0'> 
+                <Row className='mt-3 ms-0 me-0 shadow-4'> 
                     <Button variant='primary' disabled={!nextButton}>Next</Button>
                 </Row>
             </div>}
+            <div className='mt-5'>
+                <Contact />
+            </div>
+           
+           
+            
+            
+            
             
 
         </div>
