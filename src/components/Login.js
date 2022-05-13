@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Button, Form, Image, Row} from 'react-bootstrap';
+import {Button, Form, Row} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Logo from './Logo';
-import Contact from './Contact';
+import Logo from './Logo.js';
+import Contact from './Contact.js';
 
 
 export default function Login(){
@@ -11,7 +11,6 @@ export default function Login(){
     const [disabled, setDisabled] = useState(false);
     const [nextButton, setNextButton] = useState(false);
     let navigate = useNavigate();
-
 
     const flex = {
         display: 'flex',
@@ -28,7 +27,7 @@ export default function Login(){
 
             
             <Logo />
-            <Row className='mt-3 w-75 shadow-4'>
+            <Row className='mt-3 w-75 shadow-lg'>
                 <Button variant='primary'
                     onClick={(e) => {
                         navigate('/createwallet');
@@ -36,7 +35,7 @@ export default function Login(){
                  >
                     Create Wallet</Button>
             </Row>
-            <Row className='mt-3 w-75 shadow-4'>
+            <Row className='mt-3 w-75 shadow-lg'>
                 <Button variant='secondary'
                     onClick={(e) => {
                         setDisabled((disabled^true) === 1)
@@ -48,7 +47,7 @@ export default function Login(){
                 <Row>
                     <Form className='mt-3'>
                         <Form.Group>
-                            <Form.Control className='shadow-4' type='text' placeholder='passphrase'
+                            <Form.Control className='shadow-lg' type='text' placeholder='passphrase'
                             onChange={(e) => {
                                 setPassPhrase(e.target.value);
                                 if (e.value !== ""){
@@ -63,7 +62,7 @@ export default function Login(){
                     </Form>
                     
                 </Row>
-                <Row className='mt-3 ms-0 me-0 shadow-4'> 
+                <Row className='mt-3 ms-0 me-0 shadow-lg'> 
                     <Button variant='primary' disabled={!nextButton}>Next</Button>
                 </Row>
             </div>}

@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import CreateWallet from './components/createWallet';
+import Login from './components/Login.js';
+import Home from './components/Home.js';
+import CreateWallet from './components/createWallet.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       </Route>
       <Route path='/createwallet' element={<CreateWallet />}>
       </Route>
+      <Route path='/home' element={<Home />}></Route>
     </Routes>
     
   </Router>
