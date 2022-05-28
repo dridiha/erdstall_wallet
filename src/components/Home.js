@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import Logo from "./Logo.js";
 import { ethers } from "ethers";
 import Contact from "./Contact.js";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button , Toast} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaCopy, FaFileExport} from "react-icons/fa/index.esm.js";
 import {BsDot, BsThreeDotsVertical} from "react-icons/bs/index.esm.js"
+import exportFromJSON from "export-from-json";
 
 
 
@@ -13,6 +14,7 @@ export default function Home(){
     let storage = localStorage;
    const keys = JSON.parse(storage.getItem('erdstall'));
    const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
+   const [toast, setToast] = useState(false);
 
     const flex = {
         display: 'flex',
@@ -24,10 +26,29 @@ export default function Home(){
     return(
         <div style={flex}>
             <Logo />
-            <BsThreeDotsVertical
-                style={{position:'fixed', marginTop:'40px', right:'620px'}} 
-                size={25}
-            />
+            <div style={{position:'fixed', marginTop:'40px', right:'620px'}} >
+                <BsThreeDotsVertical
+                    size={25}
+                    onClick={() => {
+                        setToast(!toast);
+                    }}
+                />
+                <Toast show={toast} onClose={() => {
+                    setToast(false);
+                }}>
+                    <Toast.Header>
+                        <img
+                        src="holder.js/20x20?text=%20"
+                        className="rounded me-2"
+                        alt=""
+                        />
+                            <strong className="me-auto">Bootstrap</strong>
+                            <small>11 mins ago</small>
+                    </Toast.Header>
+                    <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+                </Toast>
+
+            </div>
             <Row>
                 <Col className='border border-info rounded-pill mb-5 me-5 p-'>
                     <BsDot color={'green'} size={30} />
@@ -52,6 +73,15 @@ export default function Home(){
                     <abbr title='export your key'>
                                 <FaFileExport size={25}
                                     style={{cursor: 'pointer'}}
+                                    onClick={() => {
+                                        const data = [{
+                                            publicKey: wallet.publicKey,
+                                            privateKey: wallet.privateKey
+                                        }];
+                                        const fileName = wallet.publicKey.substring(0, 15);
+                                        const exportType = exportFromJSON.types.json;
+                                        exportFromJSON({data, fileName, exportType});
+                                    }}
                                 />
                         </abbr>
                 </Col>
