@@ -22,12 +22,12 @@ export default function Login(){
         
 
     
-        <div className='m-5 ms-5' style={flex}>
+        <div className='m-5 ms-5 w-50' style={flex}>
         
 
             
             <Logo />
-            <Row className='mt-3 w-75 shadow-lg'>
+            <Row className='mt-3 w-50 shadow-lg'>
                 <Button variant='primary'
                     onClick={(e) => {
                         navigate('/createwallet');

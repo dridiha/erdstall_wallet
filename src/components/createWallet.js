@@ -1,22 +1,32 @@
 import React, {useEffect, useState} from "react";
 import { ethers } from "ethers";
-import { Row, Button, Form, FormControl } from "react-bootstrap";
+import { Row, Col,  Button, Form, FormControl } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
 import { useNavigate } from "react-router-dom";
 
 const mnemonicToArray = (str) => {
-    let arr = []
-    let j = 0
-    for (let i =0; i < str.length; i++){
+    let arr = [];
+    let j = 0;
+    let i;
+    let counter = 1;
+    let tmp = [];
+    for ( i = 0; i < str.length; i++){
         if (str[i] === ' '){
-            arr.push(<p className='bg-primary p-1 text-white'>str.substring(j, i + 1) </p>);
+            tmp.push(<Col className='bg-primary p-1 text-white ps-3 m-2 rounded-pill' key={counter}>{str.substring(j, i + 1)} </Col>);
             j = i + 1;
+             if (counter % 4 === 0) {
+                arr.push(<Row className='ms-1' style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>{tmp}</Row>);
+                tmp = [];
+                
+             }
+             counter++;
         }
-
+        
     }
-    console.log(arr);
+    tmp.push(<Col className='bg-primary p-1 ps-3 m-2 text-white rounded-pill' key={counter}>{str.substring(j, i + 1)} </Col>);
+    arr.push(<Row className='ms-1' style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>{tmp}</Row>);
     return arr;
 
 }
@@ -83,16 +93,17 @@ export default function CreateWallet() {
 
                     <p className='m-3'>Here is your mnemonic:</p>
                     
-                    <Row>
+                   
                         
-                        <p className='border border-info rounded-pill p-3 ms-5  w-75'
-                            style={{fontSize: '18px'}}
-                        >{keys['mnemonic']}</p>
+                        
+                        <Row>
+                            {mnemonicToArray(keys['mnemonic'])}
+                        </Row>
                         
                         
                        
                         
-                    </Row>
+                    
                     <Row>
                         <p className='m-3'>Please keep your mnemonic safe  ! </p>
                     </Row>

@@ -4,7 +4,8 @@ import { ethers } from "ethers";
 import Contact from "./Contact.js";
 import { Row, Col, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FaCopy } from "react-icons/fa";
+import { FaCopy, FaFileExport} from "react-icons/fa/index.esm.js";
+import {BsDot, BsThreeDotsVertical} from "react-icons/bs/index.esm.js"
 
 
 
@@ -23,8 +24,17 @@ export default function Home(){
     return(
         <div style={flex}>
             <Logo />
+            <BsThreeDotsVertical
+                style={{position:'fixed', marginTop:'40px', right:'620px'}} 
+                size={25}
+            />
             <Row>
-                <Col className='border border-info rounded-pill shadow-lg p-3 '>
+                <Col className='border border-info rounded-pill mb-5 me-5 p-'>
+                    <BsDot color={'green'} size={30} />
+                    Connected to Erdstall Network</Col>
+            </Row>
+            <Row>
+                <Col className='border border-info rounded-pill shadow-lg p-3 ms-5 '>
                     {publicKey}
                 </Col>
                 <Col className="p-3 ms-2">
@@ -36,6 +46,14 @@ export default function Home(){
                             }} 
                         />
                     </abbr> 
+                   
+                </Col>
+                <Col className="p-3 ms-0">
+                    <abbr title='export your key'>
+                                <FaFileExport size={25}
+                                    style={{cursor: 'pointer'}}
+                                />
+                        </abbr>
                 </Col>
             </Row>
             
