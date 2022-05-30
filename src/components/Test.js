@@ -24,8 +24,8 @@ const session = new Session(address, wallet, enclave);
 console.log("session created");
 session.onboard();
 console.log("ok");
-erdClient.getAccount(address).then(res => {
-  console.log(res.locked);
+session.getAccount(address).then(res => {
+  console.log(res);
 }).catch(err => {
   console.log(err);
 })
