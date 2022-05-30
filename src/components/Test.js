@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { Client, Session} from "@polycrypt/erdstall";
-import {Address, Account} from  "@polycrypt/erdstall/ledger";
+import {Address} from  "@polycrypt/erdstall/ledger";
 import { EnclaveWSProvider, Enclave } from "@polycrypt/erdstall/enclave";
 
 const ethRpcUrl = "ws://10.100.81.101:30313"; // local Ganache
@@ -16,19 +16,15 @@ const enclave = new Enclave(enclaveProvider);
 enclave.connect();
 await erdClient.initialize();
 await erdClient.subscribe();
+
 const wallet = ethers.Wallet.createRandom();
-console.log(wallet.privateKey);
-const address = Address.fromString(wallet.privateKey);
+const address = Address.fromString(wallet.address);
 console.log(address);
 const session = new Session(address, wallet, enclave);
 console.log("session created");
 session.onboard();
-console.log("ok");
-session.getAccount(address).then(res => {
-  console.log(res);
-}).catch(err => {
-  console.log(err);
-})
+
+export default session;
 
 // Set up any event listeners needed by the application.
 // client.on(event, handler);
