@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login.js';
 import Home from './components/Home.js';
 import CreateWallet from './components/createWallet.js';
+import Transaction from './components/Transaction.js';
+import Description from './components/Description.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +17,8 @@ root.render(
       <Route path='/createwallet' element={<CreateWallet />}>
       </Route>
       <Route path='/home' element={<Home />}></Route>
+      <Route path="/trasaction" element={<Transaction />}></Route>
+      <Route path='/description' element={<Description />}></Route>
     </Routes>
     
   </Router>

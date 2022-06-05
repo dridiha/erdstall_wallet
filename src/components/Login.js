@@ -5,6 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './Logo.js';
 import Contact from './Contact.js';
 
+export const flex = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+};
 
 export default function Login(){
     const [passPhrase, setPassPhrase] = useState("");
@@ -12,11 +17,7 @@ export default function Login(){
     const [nextButton, setNextButton] = useState(false);
     let navigate = useNavigate();
 
-    const flex = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    };
+    
 
     return(
         

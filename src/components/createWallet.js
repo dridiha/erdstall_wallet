@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
 import { useNavigate } from "react-router-dom";
+import { flex } from "./Login.js";
 
 const mnemonicToArray = (str) => {
     let arr = [];
@@ -48,11 +49,7 @@ export default function CreateWallet() {
    let storage = localStorage
     
     
-    const flex = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    };
+   
 
     return(
         

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "./Logo.js";
 import { ethers } from "ethers";
 import Contact from "./Contact.js";
@@ -7,46 +7,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaCopy, FaFileExport} from "react-icons/fa/index.esm.js";
 import {BsDot, BsThreeDotsVertical} from "react-icons/bs/index.esm.js"
 import exportFromJSON from "export-from-json";
+import Connection from "./Connection.js";
+import { flex } from "./Login.js";
+import { useNavigate } from "react-router-dom";
 
-
-
+let storage = localStorage;
+const keys = JSON.parse(storage.getItem('erdstall'));
+const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
+export const session = Connection(wallet.mnemonic.phrase);
 export default function Home(){
-    let storage = localStorage;
-   const keys = JSON.parse(storage.getItem('erdstall'));
-   const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
-   const [toast, setToast] = useState(false);
+    
+    let navigate = useNavigate();
+   const [test, setTest] = useState('');
+   
 
-    const flex = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-    };
+    
 
-    const publicKey = wallet.publicKey.substring(0,20) + "................" + wallet.publicKey.substring(wallet.publicKey.length- 10, wallet.publicKey.length);
+    const publicKey = wallet.address.substring(0,20) + "................" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
     return(
         <div style={flex}>
             <Logo />
             <div style={{position:'fixed', marginTop:'40px', right:'620px'}} >
                 <BsThreeDotsVertical
                     size={25}
-                    onClick={() => {
-                        setToast(!toast);
-                    }}
+                    
                 />
-                <Toast show={toast} onClose={() => {
-                    setToast(false);
-                }}>
-                    <Toast.Header>
-                        <img
-                        src="holder.js/20x20?text=%20"
-                        className="rounded me-2"
-                        alt=""
-                        />
-                            <strong className="me-auto">Bootstrap</strong>
-                            <small>11 mins ago</small>
-                    </Toast.Header>
-                    <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-                </Toast>
+               <p>{test}</p>
 
             </div>
             <Row>
@@ -98,7 +84,12 @@ export default function Home(){
             </Row>
             <Row className='mt-4'>
                 <Col>
-                        <Button variant='secondary'> SEND</Button>
+                        <Button 
+                            variant='secondary'
+                            onClick={() => {
+                                navigate('/trasaction');
+                            }}
+                        > SEND</Button>
                 </Col>
                 <Col>
                         <Button variant='secondary'>TRANSACTIONS</Button>
