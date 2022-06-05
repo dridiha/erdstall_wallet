@@ -15,7 +15,7 @@ const mnemonicToArray = (str) => {
     let tmp = [];
     for ( i = 0; i < str.length; i++){
         if (str[i] === ' '){
-            tmp.push(<Col className='bg-primary p-1 text-white ps-3 m-2 rounded-pill' key={counter}>{str.substring(j, i + 1)} </Col>);
+            tmp.push(<Col className='bg-primary p-1 text-white ps-3 m-2 rounded-pill'>{str.substring(j, i + 1)} </Col>);
             j = i + 1;
              if (counter % 4 === 0) {
                 arr.push(<Row className='ms-1' style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>{tmp}</Row>);
