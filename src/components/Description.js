@@ -4,19 +4,24 @@ import Contact from "./Contact.js";
 import { flex } from "./Login.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Row, Col, Alert } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { session } from "./Home.js";
 import { ethers } from "ethers";
 
-let storage = localStorage;
-const keys = JSON.parse(storage.getItem('erdstall'));
-const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
-const password = keys['password'];
+
 
 export default function Description(){
     const [pass, setPass] = useState('');
     const location = useLocation();
     const [alert, setAlert] = useState(false);
+    let storage = localStorage;
+    let navigate = useNavigate();
+    const keys = JSON.parse(storage.getItem('erdstall'));
+    if (keys === null){
+        navigate("/");
+    }
+    const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
+    const password = keys['password'];
     const confirmTransaction = () => {
         if (pass !== password){
             setAlert(true);

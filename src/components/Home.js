@@ -12,13 +12,19 @@ import { flex } from "./Login.js";
 import { useNavigate } from "react-router-dom";
 
 let storage = localStorage;
-const keys = JSON.parse(storage.getItem('erdstall'));
-const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
-export const session = Connection(wallet.mnemonic.phrase);
+
+
+
+
 export default function Home(){
-    
+    let storage = localStorage;
     let navigate = useNavigate();
-   const [test, setTest] = useState('');
+    const keys = JSON.parse(storage.getItem('erdstall'));
+    if (keys === null){
+        navigate("/");
+    }
+    const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
+    const [test, setTest] = useState('');
    
 
     
