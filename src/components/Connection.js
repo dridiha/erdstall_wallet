@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
-import { Session} from "@polycrypt/erdstall";
-import { Address } from  "@polycrypt/erdstall/ledger";
+// import { Session} from "@polycrypt/erdstall/src/session";
+// import { Address } from  "@polycrypt/erdstall/src/ledger/address";
 
 
 export default async function Connection(mnemonic) {

@@ -55,7 +55,7 @@ export default function Home(){
                     <FaCopy size={25}
                             style={{cursor: 'pointer'}}
                             onClick={() => {
-                                navigator.clipboard.writeText(wallet.publicKey);
+                                navigator.clipboard.writeText(wallet.address);
                             }} 
                         />
                     </abbr> 

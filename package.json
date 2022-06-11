@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@polycrypt/erdstall": "^0.1.1",
+    "@polycrypt/erdstall": "github:perun-network/erdstall-ts-sdk",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
