@@ -1,32 +1,58 @@
 import React, {useEffect, useState} from "react";
 import Logo from "./Logo.js";
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 import Contact from "./Contact.js";
 import { Row, Col, Button , Toast} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaCopy, FaFileExport} from "react-icons/fa/index.esm.js";
 import {BsDot, BsThreeDotsVertical} from "react-icons/bs/index.esm.js"
 import exportFromJSON from "export-from-json";
-import Connection from "./Connection.js";
+import { Session } from "@polycrypt/erdstall/session";
+import { Address } from  "@polycrypt/erdstall/address";
 import { flex } from "./Login.js";
 import { useNavigate } from "react-router-dom";
 
-let storage = localStorage;
 
+const PERUN_TOKEN = "0xefe8ef63995fb083502c6b2bd01871e084c8ab82";
 
 
 
 export default function Home(){
-    let storage = localStorage;
+    
     let navigate = useNavigate();
-    const keys = JSON.parse(storage.getItem('erdstall'));
-    if (keys === null){
-        navigate("/");
-    }
-    const wallet = ethers.Wallet.fromMnemonic(keys['mnemonic']);
-    const [test, setTest] = useState('');
-   
+    let storage = localStorage;
+    const [balance, setBalance] = useState('');
 
+    const keys = JSON.parse(storage.getItem('erdstall'));
+
+    const ethRpcUrl = "ws://10.100.81.101:30313";
+    const ethProvider = new ethers.providers.JsonRpcProvider(ethRpcUrl)
+    const wallet = ethers.Wallet.fromMnemonic(keys["mnemonic"])
+               .connect(ethProvider);
+    const address = Address.fromString(wallet.address);
+    console.log("Address", address);
+    const session = new Session(address, wallet, new URL("wss://operator.goerli.erdstall.dev:8401/ws"));
+    
+    useEffect(() => {
+        async function getBalance(){
+            console.log("session created");
+            await session.initialize();
+            console.log("initialized");
+            await session.onboard();
+            console.log("onboarded");
+            session.getAccount(address).then(res => {
+                const val = res.values.values.get(PERUN_TOKEN).value;
+                setBalance(utils.formatEther(val));
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        getBalance();
+        
+        
+    })
+    
+       
     
 
     const publicKey = wallet.address.substring(0,20) + "................" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
@@ -38,7 +64,7 @@ export default function Home(){
                     size={25}
                     
                 />
-               <p>{test}</p>
+               <p>test</p>
 
             </div>
             <Row>
@@ -84,7 +110,7 @@ export default function Home(){
                     Balance:
                 </Col>
                 <Col>
-                    Test
+                    {balance}
                 </Col>
 
             </Row>

@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
-// import { Session} from "@polycrypt/erdstall/src/session";
-// import { Address } from  "@polycrypt/erdstall/src/ledger/address";
+import { Session } from "@polycrypt/erdstall/session";
+import { Address } from  "@polycrypt/erdstall/address";
 
-
+export const PERUN_TOKEN = "0xefe8ef63995fb083502c6b2bd01871e084c8ab82";
 export default async function Connection(mnemonic) {
     
     const ethRpcUrl = "ws://10.100.81.101:30313";

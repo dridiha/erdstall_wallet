@@ -114,7 +114,7 @@ export default function CreateWallet() {
                                      'isLogged ': true                         
                                   });
                                  storage.setItem('erdstall' ,JSON.stringify(keys));
-                                 navigate('/home');
+                                 navigate('/router');
                              } else {
                                  const wallet = ethers.Wallet.createRandom();
                                      setKeys({
@@ -124,7 +124,7 @@ export default function CreateWallet() {
                                          'numberOfAccounts': keys['numberOfAccounts'] + 1
                                      });
                                 setArr(wallet.mnemonic.phrase);
-                                 setDisplayed(false);
+                                setDisplayed(false);
                              }
 
                          }}
