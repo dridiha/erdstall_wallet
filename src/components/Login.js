@@ -23,50 +23,28 @@ export default function Login(){
         
 
     
-        <div className='m-5 ms-5 w-50' style={flex}>
+        <div className='m-5 ms-5 w-50 ' style={flex}>
         
 
             
             <Logo />
-            <Row className='mt-3 w-50 shadow-lg'>
-                <Button variant='primary'
+            <Row className='mt-3 w-25  shadow-lg'>
+                <Button className="p-3" variant='primary'
                     onClick={(e) => {
                         navigate('/createwallet');
                     }}
                  >
                     Create Wallet</Button>
             </Row>
-            <Row className='mt-3 w-75 shadow-lg'>
-                <Button variant='secondary'
+            <Row className='mt-4 w-25 shadow-lg'>
+                <Button className="p-3" variant='secondary'
                     onClick={(e) => {
-                        setDisabled((disabled^true) === 1)
+                        navigate('/importwallet');
                     }}
                 >Import Wallet</Button>
             </Row>
 
-            {(disabled) && <div className='w-75'>
-                <Row>
-                    <Form className='mt-3'>
-                        <Form.Group>
-                            <Form.Control className='shadow-lg' type='text' placeholder='passphrase'
-                            onChange={(e) => {
-                                setPassPhrase(e.target.value);
-                                if (e.value !== ""){
-                                    setNextButton(true);
-                                }
-                                
-                                
-                            }}
-                            >
-                            </Form.Control>
-                        </Form.Group>
-                    </Form>
-                    
-                </Row>
-                <Row className='mt-3 ms-0 me-0 shadow-lg'> 
-                    <Button variant='primary' disabled={!nextButton}>Next</Button>
-                </Row>
-            </div>}
+            
             <div className='mt-5'>
                 <Contact />
             </div>

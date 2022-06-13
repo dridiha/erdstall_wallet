@@ -15,7 +15,7 @@ const mnemonicToArray = (str) => {
     let tmp = [];
     for ( i = 0; i < str.length; i++){
         if (str[i] === ' '){
-            tmp.push(<Col className='bg-primary p-1 text-white ps-3 m-2 rounded-pill'>{str.substring(j, i + 1)} </Col>);
+            tmp.push(<Col className='p-1 text-white ps-3 m-2 rounded-pill' style={{backgroundColor: "#88B04B"}}>{str.substring(j, i + 1)} </Col>);
             j = i + 1;
              if (counter % 4 === 0) {
                 arr.push(<Row className='ms-1' style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>{tmp}</Row>);
@@ -26,7 +26,7 @@ const mnemonicToArray = (str) => {
         }
         
     }
-    tmp.push(<Col className='bg-primary p-1 ps-3 m-2 text-white rounded-pill' key={counter}>{str.substring(j, i + 1)} </Col>);
+    tmp.push(<Col className='p-1 ps-3 m-2 text-white rounded-pill' style={{backgroundColor: "#88B04B"}}>{str.substring(j, i + 1)} </Col>);
     arr.push(<Row className='ms-1' style={{display:'flex', flexDirection: 'row', justifyContent:'center'}}>{tmp}</Row>);
     return arr;
 
@@ -86,9 +86,9 @@ export default function CreateWallet() {
                    
                 </Form> }
                 
-                { !displayed && <div className="w-25 border border-light rounded shadow-lg" style={{backgroundColor: '#dcd4af'}}>
+                { !displayed && <div className="w-25 border border-light rounded shadow-lg" style={{backgroundColor: '#eae8e8'}}>
 
-                    <p className='m-3'>Here is your mnemonic:</p>
+                    <p className='m-3'><i>Here is your mnemonic:</i></p>
                     
                    
                         
@@ -102,36 +102,36 @@ export default function CreateWallet() {
                         
                     
                     <Row>
-                        <p className='m-3'>Please keep your mnemonic safe  ! </p>
+                        <p className='m-3'><i>Please keep your mnemonic safe  !</i> </p>
                     </Row>
                 </div> }
-                <Row className='w-25'>
-                     <Button className='mt-3  shadow-lg' variant='primary' disabled={disabled}
-                         onClick={() => {
-                             if (!displayed){
-                                 setKeys({
-                                     ...keys,
-                                     'isLogged ': true                         
-                                  });
-                                 storage.setItem('erdstall' ,JSON.stringify(keys));
-                                 navigate('/router');
-                             } else {
-                                 const wallet = ethers.Wallet.createRandom();
-                                     setKeys({
-                                         ...keys,
-                                         'mnemonic': wallet.mnemonic.phrase,
-                                         'accounts': keys['accounts'].push(wallet.privateKey),
-                                         'numberOfAccounts': keys['numberOfAccounts'] + 1
-                                     });
-                                setArr(wallet.mnemonic.phrase);
-                                setDisplayed(false);
-                             }
+                
+                    <Button className='mt-5 w-25 shadow-lg' variant='primary' disabled={disabled}
+                        onClick={() => {
+                            if (!displayed){
+                                setKeys({
+                                    ...keys,
+                                    'isLogged ': true                         
+                                });
+                                storage.setItem('erdstall' ,JSON.stringify(keys));
+                                navigate('/router');
+                            } else {
+                                const wallet = ethers.Wallet.createRandom();
+                                    setKeys({
+                                        ...keys,
+                                        'mnemonic': wallet.mnemonic.phrase,
+                                        'accounts': keys['accounts'].push(wallet.privateKey),
+                                        'numberOfAccounts': keys['numberOfAccounts'] + 1
+                                    });
+                            setArr(wallet.mnemonic.phrase);
+                            setDisplayed(false);
+                            }
 
-                         }}
-                     >
-                         NEXT
-                     </Button>
-                </Row>
+                        }}
+                    >
+                        NEXT
+                    </Button>
+                
                
                 
             

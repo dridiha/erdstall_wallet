@@ -8,6 +8,7 @@ import CreateWallet from './components/createWallet.js';
 import Transaction from './components/Transaction.js';
 import Description from './components/Description.js';
 import Routing from './components/Router.js';
+import ImportWallet from './components/importWallet.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +23,7 @@ root.render(
       <Route path='/home' element={<Home />}></Route>
       <Route path="/trasaction" element={<Transaction />}></Route>
       <Route path='/description' element={<Description />}></Route>
+      <Route path='/importwallet' element={<ImportWallet />}></Route>
     </Routes>
     
   </Router>
