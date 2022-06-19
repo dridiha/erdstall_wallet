@@ -59,7 +59,7 @@ export default function Transaction(props) {
                                 >PRN</option>
                                 <option
                                     onChange={() => {
-                                        setToken("PRN");
+                                        setToken("ETH");
                                     }}
                                 >
                                     ETH
@@ -76,7 +76,7 @@ export default function Transaction(props) {
                     variant='primary'
                     onClick={() => {
                         if (destinationAddress !== '' && amount !== null){
-                            navigate('/description', {state:{'destinationAddress': destinationAddress, 'amount': amount}});
+                            navigate('/description', {state:{'destinationAddress': destinationAddress, 'amount': amount, 'token': token}});
                         }
                     }}
                     >NEXT</Button>

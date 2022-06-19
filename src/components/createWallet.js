@@ -45,6 +45,7 @@ export default function CreateWallet() {
         'isLogged': false,
         'numberOfAccounts': 0
     })
+    const transactions = [] 
    let navigate = useNavigate();
    let storage = localStorage
     
@@ -114,6 +115,7 @@ export default function CreateWallet() {
                                     'isLogged ': true                         
                                 });
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
+                                storage.setItem('transactions', JSON.stringify(transactions))
                                 navigate('/router');
                             } else {
                                 const wallet = ethers.Wallet.createRandom();

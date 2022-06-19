@@ -16,8 +16,8 @@ import { VscAccount } from "react-icons/vsc/index.esm.js"
 
 
 
-const PERUN_TOKEN = "0xefe8ef63995fb083502c6b2bd01871e084c8ab82";
-const ETHER = "0x0000000000000000000000000000000000000000"
+export const PERUN_TOKEN = "0xefe8ef63995fb083502c6b2bd01871e084c8ab82";
+export const ETHER = "0x0000000000000000000000000000000000000000"
 
 
 export default function Home(){
@@ -51,10 +51,18 @@ export default function Home(){
             await session.onboard();
             console.log("onboarded");
             session.getAccount(address).then(res => {
-                let val = res.values.values.get(PERUN_TOKEN).value;
-                setPrn(utils.formatEther(val));
+                try{
+                    console.log(res);
+                    let val = utils.formatEther(res.values.values.get(PERUN_TOKEN).value);
+                    setPrn(val);
+                    setBalance(val);
+                } catch(err){
+                    setPrn("0.0");
+                    setBalance("0.0"); 
+                }
+                
                 try {
-                    val = res.values.values.get(ETHER).value;
+                    let val = res.values.values.get(ETHER).value;
                     setEther(utils.formatEther(val));
                 } catch(Error){
                     setEther("0.0");
@@ -192,6 +200,9 @@ export default function Home(){
                             className="shadow-lg rounded-pill"
                             variant='light'
                             style={{backgroundColor:"#FF6F61"}}
+                            onClick={() => {
+                                navigate('/history');
+                            }}
                         >
                         TRANSACTIONS</Button>
                 </Col>
