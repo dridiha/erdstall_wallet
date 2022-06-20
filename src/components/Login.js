@@ -21,12 +21,10 @@ export default function Login(){
 
     return(
         
-
+        
     
         <div className='m-5 ms-5 w-50 ' style={flex}>
-        
 
-            
             <Logo />
             <Row className='mt-3 w-25  shadow-lg'>
                 <Button className="p-3" variant='primary'

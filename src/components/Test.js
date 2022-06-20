@@ -9,7 +9,7 @@ import { Amount } from "@polycrypt/erdstall/amount";
 const ethRpcUrl = "ws://10.100.81.101:30313";
 
 const ethProvider = new ethers.providers.JsonRpcProvider(ethRpcUrl)
-const wallet = ethers.Wallet.createRandom()
+const wallet = ethers.Wallet.fromMnemonic("hill dress spend purity bless bullet roast alarm cart draft hedgehog supply")
             .connect(ethProvider);
 console.log(wallet.privateKey);
 const address = Address.fromString(wallet.address);
