@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function Contact() {
     return(
-        <div>
-            <p>If you need support, please <a href="https://polycry.pt/">contact us</a></p>
+        <div className="w-100">
+            <p style={{fontSize: "13px"}}>If you need support, please <a href="https://polycry.pt/">contact us</a></p>
         </div>
     )
 }

@@ -23,10 +23,10 @@ export default function Login(){
         
         
     
-        <div className='m-5 ms-5 w-50 ' style={flex}>
+        <div className='m-5 ms-5' style={flex}>
 
             <Logo />
-            <Row className='mt-3 w-25  shadow-lg'>
+            <Row className='mt-3 w-100 shadow-lg'>
                 <Button className="p-3" variant='primary'
                     onClick={(e) => {
                         navigate('/createwallet');
@@ -34,7 +34,7 @@ export default function Login(){
                  >
                     Create Wallet</Button>
             </Row>
-            <Row className='mt-4 w-25 shadow-lg'>
+            <Row className='mt-4 w-100 shadow-lg'>
                 <Button className="p-3" variant='secondary'
                     onClick={(e) => {
                         navigate('/importwallet');
@@ -43,7 +43,7 @@ export default function Login(){
             </Row>
 
             
-            <div className='mt-5'>
+            <div className='mt-5 ms-3'>
                 <Contact />
             </div>
            

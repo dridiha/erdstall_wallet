@@ -17,7 +17,7 @@ export default function Logo(props) {
     }
     return(
         <Row className={className} style={style}>
-            <Col className="ms-5">
+            <Col className="ms-3">
                 <Image src='https://polycry.pt/wp-content/uploads/2022/02/Screenshot-2022-01-24-131338.png' alt='Erdstall'
                     className='w-100 '
                 >

@@ -83,11 +83,11 @@ export default function Home(){
        
     
 
-    const publicKey = wallet.address.substring(0,15) + "........" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
+    const addr = wallet.address.substring(0,10) + "......" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
     return(
         <div style={flex}>
             <Logo menu={true}/>
-            <div className="rounded mt-0 shadow-lg" style={{backgroundColor:"#c1cdcd"}}>
+            <div className="rounded mt-0 shadow-lg w-100" style={{backgroundColor:"#c1cdcd"}}>
                 <Row className="ms-5 rounded">
                     <Col className='mb-2 mt-3 ms-3 me-5 p-'>
                         <BsDot color={'green'} size={30} />
@@ -95,12 +95,12 @@ export default function Home(){
                 </Row>
                 <Row>
                     <Col>
-                        <VscAccount className="mt-3 ms-4" size={30}>
+                        <VscAccount className="mt-3 ms-3" size={30}>
 
                         </VscAccount>
                     </Col>
                     <Col className='ms-1 p-3 border-bottom border-dark'>    
-                        <p className="text-muted">{publicKey}</p>
+                        <p className="text-muted">{addr}</p>
                     </Col>
                     <Col className="p-3 ms-2">
                     <abbr title='Copy'>
@@ -136,7 +136,7 @@ export default function Home(){
                 </Row>
             </div>
             
-            <div className="w-25">
+            <div className="w-100">
                 <Row className="mt-5 ms-2">
                     <Col>
                         Assets
@@ -167,8 +167,7 @@ export default function Home(){
                     </Col>
                     
                 </Row>
-                <Row className='mt-5
-                 bg-primary rounded shadow-lg p-3'>
+                <Row className='mt-5 bg-primary rounded shadow-lg p-3'>
                     <Col>
                         Balance:
                     </Col>

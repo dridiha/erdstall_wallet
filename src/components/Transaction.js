@@ -16,9 +16,9 @@ export default function Transaction(props) {
     return(
         <div style={flex}>
             <Logo />
-            <Form className="w-25 ms-5">
+            <Form className="ms-5">
                 <Form.Group>
-                    <Row>
+                    <Row className="w-100">
 
                     
                         <Form.Label className="">
@@ -32,11 +32,11 @@ export default function Transaction(props) {
                         }}
                         >
                         </Form.Control>
-                        <Form.Label className="m-2">
+                        <Form.Label className="mt-2">
                             <b>Amount</b>
                         </Form.Label>
                     </Row>
-                    <Row>
+                    <Row className="w-100">
 
                     
                         <Col className="p-0">
@@ -50,7 +50,7 @@ export default function Transaction(props) {
 
                             </Form.Control>
                         </Col>
-                        <Col xs={3} className='mt-2'>
+                        <Col xs={4} className='mt-2'>
                             <Form.Select defaultValue="PRN">
                                 <option
                                     onChange={() => {
@@ -70,9 +70,9 @@ export default function Transaction(props) {
                     </Row>
                     
                 </Form.Group>
-                <Row>
+                <Row className="w-100">
                     <Button 
-                    className='w-100 mt-5 mb-5 shadow-lg'
+                    className='mt-5 mb-5 shadow-lg'
                     variant='primary'
                     onClick={() => {
                         if (destinationAddress !== '' && amount !== null){
@@ -85,7 +85,9 @@ export default function Transaction(props) {
                 
             </Form>
             
-            <Contact />
+            <div className='mt-5 ms-3'>
+                    <Contact />
+            </div>
         </div>
     )
 }

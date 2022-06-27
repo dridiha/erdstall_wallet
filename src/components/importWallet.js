@@ -87,7 +87,9 @@ export default function ImportWallet(){
                 </Form.Group>
             </Form>
 
-            <Contact />
+            <div className='mt-5 ms-3'>
+                <Contact />
+            </div>
         </div>
         
 
