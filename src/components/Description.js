@@ -84,6 +84,9 @@ export default function Description(){
                     
                     console.log("accepted");
                     console.log(value);
+                    setTimeout(()=>{
+                        navigate("/home");
+                    }, 5)
                 })
             }).catch(err => {
                 console.log("Error in transaction");
@@ -97,40 +100,36 @@ export default function Description(){
             {alert && <div>
                 <Alert variant='danger'>Password is incorrect !</Alert>
             </div>}
-            <div className="border border-dark rounded shadow-lg">
+            <div className="border border-dark rounded shadow-lg w-100 ms-2">
                 <Row className='p-2 m-2'>
-                    <b>Your Transaction </b>
+                    <b className="text-primary">Your Transaction </b>
                 </Row>
                 <Row className='p-2 m-2'>
-                    <Col className="w-25">
-                        Source Address:
-                    </Col>
-                    <Col className="w-75">
-                        {wallet.address}
-                    </Col>
+                    <b><i className="text-success">Source Address:</i></b>
                 </Row>
-                <Row className='p-2 m-2'>
-                    <Col className="w-25">
-                            Destination Address:
-                    </Col>
-                    <Col className="w-75">
-                        {location.state.destinationAddress}
-                    </Col>
-
+                <Row className="ms-4">
+                    {wallet.address}
+                </Row>
+                <Row className='p-2 m-2'>    
+                    <b><i className="text-success">Destination Address:</i></b>
+                </Row>
+                <Row className="ms-4">
+                    {location.state.destinationAddress}
                 </Row>
                 <Row className="p-2 m-2">
-                    <Col className="w-25">
-                            Amount:
+                    <Col className="">
+                    <b><i className="text-success">Amount:</i></b>
                     </Col>
-                    <Col className="w-75">
+                    <Col className="">
                         {location.state.amount} {location.state.token}
                     </Col>
                 </Row>
             </div>
-            <div className='mt-5'>
+            <div className='mt-5 w-100'>
                 <Form>
                     <Form.Group>
                         <FormControl
+                            className="w-75  ms-5 shadow-lg"
                             placeholder="password"
                             type='password'
                             onChange={(e) => {
@@ -142,7 +141,7 @@ export default function Description(){
                         
                         <Button 
                     variant='primary'
-                    className='w-100 mt-5 mb-5 shadow-lg'
+                    className='w-75 mt-5 mb-5 ms-5 shadow-lg'
                     onClick={confirmTransaction}
                 >CONFIRM</Button>
                     </Form.Group>
@@ -150,8 +149,10 @@ export default function Description(){
                 
             </div>
                 
+            <div className="mt-3 ms-3">
+                <Contact />
+            </div>
             
-            <Contact />
         </div>
     )
 }

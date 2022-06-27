@@ -10,21 +10,21 @@ import Description from './components/Description.js';
 import Routing from './components/Router.js';
 import ImportWallet from './components/importWallet.js';
 import History from './components/History.js';
+import Welcome from './components/welcome.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <Routes>
-      <Route exact path='/' element={<Login />}>
+      <Route exact path='/' element={<Welcome />}>
       </Route>
       <Route path='/createwallet' element={<CreateWallet />}></Route>
-      
-      <Route path='/router' element={<Routing />}></Route>
       <Route path='/home' element={<Home />}></Route>
-      <Route path="/trasaction" element={<Transaction />}></Route>
+      <Route path="/transaction" element={<Transaction />}></Route>
       <Route path='/description' element={<Description />}></Route>
       <Route path='/importwallet' element={<ImportWallet />}></Route>
       <Route path='/history' element ={<History />}></Route>
+      <Route path="/login" element={<login />}></Route>
     </Routes>
     
   </Router>

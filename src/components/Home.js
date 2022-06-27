@@ -24,6 +24,8 @@ export default function Home(){
     
     let navigate = useNavigate();
     let storage = localStorage;
+    let session = sessionStorage;
+
     const [balance, setBalance] = useState('');
     const [prn, setPrn] = useState('');
     const [ether, setEther] = useState('');

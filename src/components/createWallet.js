@@ -43,12 +43,12 @@ export default function CreateWallet() {
         'password': '',
         'mnemonic': '',
         'accounts': [],
-        'isLogged': false,
         'numberOfAccounts': 0
     })
     const transactions = [] 
    let navigate = useNavigate();
-   let storage = localStorage
+   let storage = localStorage;
+   let session = sessionStorage;
     
     
    
@@ -121,13 +121,10 @@ export default function CreateWallet() {
                     <Button className='mt-5 w-50 shadow-lg' variant='primary' disabled={disabled}
                         onClick={() => {
                             if (!displayed){
-                                setKeys({
-                                    ...keys,
-                                    'isLogged ': true                         
-                                });
+                                session.setItem('erdstall', new Date().getTime());
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
                                 storage.setItem('transactions', JSON.stringify(transactions))
-                                navigate('/router');
+                                navigate('/home');
                             } else {
                                 const wallet = ethers.Wallet.createRandom();
                                     setKeys({

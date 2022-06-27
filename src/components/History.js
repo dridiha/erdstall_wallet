@@ -13,10 +13,10 @@ const showhistory = (transactions) => {
     transactions.forEach(tx => {
         let tmp = []
         const destAdd = tx['destination address'].substring(0,10) + "......" + tx['destination address'].substring(tx['destination address'].length- 10, tx['destination address'].length);
-        tmp.push(<Col xs={6} className='pt-2'>{destAdd}</Col>)
-        tmp.push(<Col xs={2} className='pt-2'>{tx['amount']}</Col>)
-        tmp.push(<Col xs={4} className='pt-2'>{tx['time']}</Col>)
-        arr.push(<Row className="border border-dark rounded-pill shadow-lg mt-4">{tmp}</Row>)
+        tmp.push(<Col xs={6} className='pt-2' key={Math.floor(Math.random() * 10000)}>{destAdd}</Col>)
+        tmp.push(<Col xs={2} className='pt-2' key={Math.floor(Math.random() * 10000)}>{tx['amount']}</Col>)
+        tmp.push(<Col xs={4} className='pt-2' key={Math.floor(Math.random() * 10000)}>{tx['time']}</Col>)
+        arr.push(<Row className="border border-dark rounded-pill shadow-lg mt-4 ms-2" key={Math.floor(Math.random() * 10000)}>{tmp}</Row>)
     });
     return arr;
 }
@@ -30,10 +30,10 @@ export default function History() {
 
     return(
         <div style={flex}>
-            <Row className="mb-4 mt-3 me-5 w-25 pb-4 border-bottom border-dark">
+            <Row className="mb-4 mt-3 ms-2 w-100 pb-4 border-bottom border-dark">
                 <Col xs={2}>
                     <IoMdArrowBack 
-                        className="border border-dark rounded-pill"
+                        className="border border-dark rounded-pill mt-1"
                         size={25}
                         color={'#0072B5'}
                         style={{cursor:'pointer'}}
@@ -46,7 +46,7 @@ export default function History() {
                 </Col>
                 
             </Row>
-            <Row className="w-25">
+            <Row className="w-100">
                 <Col xs={6} className="">
                     <b><i>Destination Address</i></b>
                 </Col>
