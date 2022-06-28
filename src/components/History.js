@@ -28,6 +28,10 @@ export default function History() {
     let transactions = JSON.parse(storage.getItem('transactions'));
     let navigate = useNavigate();
 
+    useEffect(() => {
+        storage.setItem('loggedIn', new Date().getTime());
+    });
+
     return(
         <div style={flex}>
             <Row className="mb-4 mt-3 ms-2 w-100 pb-4 border-bottom border-dark">

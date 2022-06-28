@@ -121,7 +121,7 @@ export default function CreateWallet() {
                     <Button className='mt-5 w-50 shadow-lg' variant='primary' disabled={disabled}
                         onClick={() => {
                             if (!displayed){
-                                session.setItem('erdstall', new Date().getTime());
+                                storage.setItem('loggedIn', new Date().getTime());
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
                                 storage.setItem('transactions', JSON.stringify(transactions))
                                 navigate('/home');

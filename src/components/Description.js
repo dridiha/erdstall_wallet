@@ -16,10 +16,7 @@ import { Amount } from "@polycrypt/erdstall/amount";
 
 export default function Description(){
     
-    
-
-    
-
+   
     const [alert, setAlert] = useState(false);
     const pass = useRef(); 
     
@@ -42,7 +39,9 @@ export default function Description(){
     
    const password = keys["password"];
     
-
+    useEffect(() => {
+        storage.setItem('loggedIn', new Date().getTime());
+    }); 
     async function confirmTransaction() {
         console.log("test")
         if (pass.current !== password){

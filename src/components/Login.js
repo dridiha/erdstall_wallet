@@ -16,7 +16,6 @@ export default function Login(){
     const [disabled, setDisabled] = useState(false);
     const [nextButton, setNextButton] = useState(false);
     let navigate = useNavigate();
-
     
 
     return(

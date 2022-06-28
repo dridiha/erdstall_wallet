@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
 import { flex } from "./Login.js";
@@ -13,6 +13,10 @@ export default function Transaction(props) {
     const [amount, setAmount] = useState(0.0);
     const [token, setToken] = useState('PRN');
     let navigate = useNavigate();
+    let storage = localStorage;
+    useEffect(() => {
+        storage.setItem('loggedIn', new Date().getTime());
+    });
     return(
         <div style={flex}>
             <Logo />

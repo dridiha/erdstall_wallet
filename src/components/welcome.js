@@ -11,21 +11,25 @@ export default function Welcome(){
     const password = useRef("");
     let navigate = useNavigate();
     let storage = localStorage;
-    let session = sessionStorage;
+
     const [displayed, setDisplayed] = useState(false);
     const [pass, setPass] = useState("");
     useEffect(() => {
         const keys = JSON.parse(storage.getItem("erdstall"));
+        console.log(keys);
         if (keys === null){
             navigate('/login');
+            
         }else {
             setPass(keys["password"]);
         }
-        const time = session.getItem('erdstall');
-        if (new Date().getTime() - time < 30*60*1000){
+        const time = storage.getItem('loggedIn');
+        console.log(time);
+        if ((new Date().getTime() - time) > 30*60*1000 && time !== null){
+            console.log("okay")
             navigate("/home")
         } else {
-            session.removeItem("erdstall")
+            storage.removeItem("loggedIn");
         }
     })
     const checkPassword = () => {
@@ -35,7 +39,7 @@ export default function Welcome(){
             setDisplayed(true);
         } else {
             setDisplayed(false);
-            session.setItem('erdstall', new Date().getTime());
+            storage.setItem('loggedIn', new Date().getTime());
             navigate("/home");
         }
 
@@ -62,7 +66,7 @@ export default function Welcome(){
                     variant="primary"
                     className="mt-4 w-100 shadow-lg"
                     onClick={checkPassword}
-                >CONFIRM</Button>
+                >UNLOCK</Button>
             </Form>
             <div className='mt-5'>
                     <Contact />

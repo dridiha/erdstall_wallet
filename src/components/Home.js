@@ -24,7 +24,7 @@ export default function Home(){
     
     let navigate = useNavigate();
     let storage = localStorage;
-    let session = sessionStorage;
+    
 
     const [balance, setBalance] = useState('');
     const [prn, setPrn] = useState('');
@@ -41,6 +41,9 @@ export default function Home(){
     const [borderEther, setBorderEther] = useState("");
     const [borderPrn, setBorderPrn] = useState(className);
     
+    useEffect(() => {
+        storage.setItem('loggedIn', new Date().getTime());
+    });
     
     useEffect(() => {
         async function getBalance(){
@@ -191,7 +194,7 @@ export default function Home(){
                             variant='light'
                             style={{backgroundColor:"#FF6F61"}}
                             onClick={() => {
-                                navigate('/trasaction');
+                                navigate('/transaction');
                             }}
                         > TRANSFER</Button>
                 </Col>

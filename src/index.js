@@ -24,7 +24,7 @@ root.render(
       <Route path='/description' element={<Description />}></Route>
       <Route path='/importwallet' element={<ImportWallet />}></Route>
       <Route path='/history' element ={<History />}></Route>
-      <Route path="/login" element={<login />}></Route>
+      <Route path="/login" element={<Login />}></Route>
     </Routes>
     
   </Router>

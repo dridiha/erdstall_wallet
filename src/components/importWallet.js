@@ -21,7 +21,6 @@ export default function ImportWallet(){
         'numberOfAccounts': 0
     });
     let storage = localStorage;
-    let session = sessionStorage;
     let navigate = useNavigate();
     return(
         <div style={flex}>
@@ -77,7 +76,7 @@ export default function ImportWallet(){
                                     'numberOfAccounts': keys['numberOfAccounts'] + 1
                                 });
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
-                                session.setItem('erdstall', new Date().getTime());
+                                storage.setItem('loggedIn', new Date().getTime());
                                 navigate('/home');
                             } catch(err){
                                console.log(err);
