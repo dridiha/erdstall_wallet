@@ -11,8 +11,8 @@ chrome.runtime.onMessage.addListener((req) => {
             type: "popup",
             top: req.positionY,
             left: req.positionX,
-            height : 580, 
-            width : 450
+            height : 680, 
+            width : 550
         })
         
     }

@@ -25,7 +25,7 @@ export default function Welcome(){
         }
         const time = storage.getItem('loggedIn');
         console.log(time);
-        if ((new Date().getTime() - time) > 30*60*1000 && time !== null){
+        if ((new Date().getTime() - time) < 30*60*1000 && time !== null){
             console.log("okay")
             navigate("/home")
         } else {
