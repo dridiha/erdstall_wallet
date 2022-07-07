@@ -12,6 +12,8 @@ import { Address } from  "@polycrypt/erdstall/address";
 import { flex } from "./Login.js";
 import { useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc/index.esm.js"
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 
 
@@ -128,13 +130,31 @@ export default function Home(){
                                         className='rounded-circle border border-dark p-1'
                                         style={{cursor: 'pointer', color:"#FF6F61"}}
                                         onClick={() => {
-                                            const data = [{
-                                                publicKey: wallet.publicKey,
-                                                privateKey: wallet.privateKey
-                                            }];
-                                            const fileName = wallet.publicKey.substring(0, 15);
-                                            const exportType = exportFromJSON.types.json;
-                                            exportFromJSON({data, fileName, exportType});
+                                            confirmAlert({
+                                
+                                                message: 'Are you sure you want to export all of your keys ?',
+                                                buttons: [
+                                                  {
+                                                    label: 'Yes',
+                                                    onClick: () => {
+                                                        const data = [{
+                                                            publicKey: wallet.publicKey,
+                                                            privateKey: wallet.privateKey
+                                                        }];
+                                                        const fileName = wallet.publicKey.substring(0, 15);
+                                                        const exportType = exportFromJSON.types.json;
+                                                        exportFromJSON({data, fileName, exportType});
+                                                    }
+                                                  },
+                                                  {
+                                                    label: 'No',
+                                                    onClick: () => {}
+                                                  }
+                                                ],
+                                                closeOnEscape: true,
+                                                closeOnClickOutside: true,
+                                              });
+                                            
                                         }}
                                     />
                             </abbr>
