@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Wallet",
+    "author": "whxy",
+    "version": "1.0.1",
+    "description": "E-Wallet",
+    
+    "action":{
+      "default_title": "E-Wallet",
+      "default_popup": "index.html",
+      "default_icon":{
+        "16":"logo192.png",
+        "128":"logo192.png"
+      }
+    },
+
+    "background": {
+      "service_worker": "background.js"
+      
+      },
+    "content_scripts":[{
+
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+      
+    }],
+   
+    "permissions": ["storage", "sessions", "windows", "scripting", "activeTab"]
+    
+}
