@@ -24,7 +24,7 @@ export default function Home(){
     
     let navigate = useNavigate();
     let storage = localStorage;
-    
+  
 
     const [balance, setBalance] = useState('');
     const [prn, setPrn] = useState('');
@@ -35,7 +35,7 @@ export default function Home(){
 
     const ethRpcUrl = "ws://10.100.81.101:30313";
     const ethProvider = new ethers.providers.JsonRpcProvider(ethRpcUrl)
-    const wallet = ethers.Wallet.fromMnemonic(keys["mnemonic"])
+    const wallet = new ethers.Wallet(keys["active"]['privateKey'])
                .connect(ethProvider);
     const className = "border-bottom border-primary";
     const [borderEther, setBorderEther] = useState("");
@@ -91,7 +91,7 @@ export default function Home(){
     const addr = wallet.address.substring(0,10) + "......" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
     return(
         <div style={flex}>
-            <Logo menu={true}/>
+            <Logo menu={true} accounts={keys['accounts']}/>
             <div className="rounded mt-0 shadow-lg w-100" style={{backgroundColor:"#c1cdcd"}}>
                 <Row className="ms-5 rounded">
                     <Col className='mb-2 mt-3 ms-3 me-5 p-'>
@@ -116,6 +116,7 @@ export default function Home(){
                             style={{cursor: 'pointer', color:"#FF6F61"}}
                             onClick={() => {
                                 navigator.clipboard.writeText(wallet.address);
+                                
                             }} 
                             />
                         </abbr> 

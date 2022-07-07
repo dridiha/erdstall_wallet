@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useRef, useState} from "react";
 import { ethers } from "ethers";
 import { Row, Col,  Button, Form, FormControl } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,16 +10,10 @@ import { flex } from "./Login.js";
 
 
 export default function ImportWallet(){
-    const [passphrase, setPassPhrase] = useState('');
-    const [password, setPassword] = useState("");
+    const passphrase = useRef('');
+    const password = useRef('');
     const [disabled, setDisabled] = useState(true);
-    const [keys, setKeys] = useState( {
-        'password': '',
-        'mnemonic': '',
-        'accounts': [],
-        'isLogged': false,
-        'numberOfAccounts': 0
-    });
+    
     let storage = localStorage;
     let navigate = useNavigate();
     return(
@@ -31,7 +25,7 @@ export default function ImportWallet(){
                     className='mt-3 shadow-lg'
                     placeholder="passphrase"
                     onChange={(e) => {
-                        setPassPhrase(e.target.value);
+                        passphrase.current = e.target.value;
                         
                     } }
                    >
@@ -41,7 +35,7 @@ export default function ImportWallet(){
                         type='password'
                         placeholder="New Password"
                         onChange={(e) => {
-                            setPassword(e.target.value);
+                            password.current = e.target.value;
                             
                         } }
                     >
@@ -51,13 +45,9 @@ export default function ImportWallet(){
                         type='password'
                         placeholder="Repeat password"
                         onChange={(e) => {
-                            if (e.target.value === password && passphrase !== ''){
+                            if (e.target.value === password.current && password.current !== '' && passphrase.current !== ''){
                                 setDisabled(false);
-                                setKeys({
-                                    ...keys,
-                                    'password':password,
-                                    'mnemonic': passphrase
-                                });
+                                
                             }
                         }}
                     >
@@ -68,13 +58,20 @@ export default function ImportWallet(){
                         onClick={() => {
                             try{
                                 const wallet = ethers.Wallet.fromMnemonic(passphrase);
-                                console.log(passphrase);
-                                console.log(password);
-                                setKeys({
-                                    ...keys,
-                                    'accounts': keys['accounts'].push(wallet.privateKey),
-                                    'numberOfAccounts': keys['numberOfAccounts'] + 1
-                                });
+                                const account = {
+                                    'name': 'main',
+                                    'privateKey': wallet.privateKey,
+                                    'address': wallet.address 
+                                }
+                                const accounts = [];
+                                accounts.push(account);
+                                const keys = {
+                                    'password': password.current,
+                                    'accounts': accounts,
+                                    'active': account,
+                                    'mnemonic': wallet.mnemonic.phrase
+                                    
+                                }
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
                                 storage.setItem('loggedIn', new Date().getTime());
                                 navigate('/home');

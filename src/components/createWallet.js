@@ -38,19 +38,15 @@ export default function CreateWallet() {
     const [displayed, setDisplayed] = useState(true);
     const [disabled, setDisabled] = useState(true);
     const repPassword = useRef('');
+    const password = useRef("");
+    const wallet = useRef({});
     const [arr, setArr] = useState([]);
-    const [keys, setKeys] = useState( {
-        'password': '',
-        'mnemonic': '',
-        'accounts': [],
-        'numberOfAccounts': 0
-    })
+    
     const transactions = [] 
    let navigate = useNavigate();
    let storage = localStorage;
-   let session = sessionStorage;
-    
-    
+   
+ 
    
 
     return(
@@ -65,10 +61,7 @@ export default function CreateWallet() {
                             placeholder='Enter Password'
                             type='password'
                             onChange={(e) => {
-                                setKeys({
-                                    ...keys,
-                                    'password': e.target.value,
-                                });
+                                password.current = e.target.value;
                                 if (e.target.value === repPassword.current && repPassword.current !==  ''){       
                                     setDisabled(false);
                                 } else {
@@ -85,7 +78,7 @@ export default function CreateWallet() {
                                 type='password'
                                 onChange={(e) => {
                                     repPassword.current = e.target.value;
-                                    if (e.target.value === keys['password'] && keys['password '] !==  ''){       
+                                    if (e.target.value === password.current && password.current !==  ''){       
                                         setDisabled(false);
                                     } else {
                                         setDisabled(true);
@@ -106,7 +99,7 @@ export default function CreateWallet() {
                         
                         
                         <Row>
-                            {mnemonicToArray(keys['mnemonic'])}
+                            {mnemonicToArray(wallet.current.mnemonic.phrase)}
                         </Row>
                         
                         
@@ -122,18 +115,27 @@ export default function CreateWallet() {
                         onClick={() => {
                             if (!displayed){
                                 storage.setItem('loggedIn', new Date().getTime());
-                                storage.setItem('erdstall' ,JSON.stringify(keys));
                                 storage.setItem('transactions', JSON.stringify(transactions))
+                                const account = {
+                                    'name': 'main',
+                                    'privateKey': wallet.current.privateKey,
+                                    'address': wallet.current.address 
+                                }
+                                const accounts = [];
+                                accounts.push(account);
+                                const json = {
+                                    'password': password.current,
+                                    'accounts': accounts,
+                                    'active': account,
+                                    'mnemonic': wallet.current.mnemonic.phrase
+                                    
+                                }
+                                storage.setItem('erdstall', JSON.stringify(json))
                                 navigate('/home');
                             } else {
-                                const wallet = ethers.Wallet.createRandom();
-                                    setKeys({
-                                        ...keys,
-                                        'mnemonic': wallet.mnemonic.phrase,
-                                        'accounts': keys['accounts'].push(wallet.privateKey),
-                                        'numberOfAccounts': keys['numberOfAccounts'] + 1
-                                    });
-                                setArr(wallet.mnemonic.phrase);
+                                const tmp = ethers.Wallet.createRandom();
+                                wallet.current = tmp;
+                                setArr(wallet.current.mnemonic.phrase);
                                 setDisplayed(false);
                             }
 

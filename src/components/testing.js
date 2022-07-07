@@ -28,4 +28,6 @@ import { Amount } from "@polycrypt/erdstall/amount";
 //     console.log(utils.formatEther(prn));
 // });
 // console.log(session.tokenProvider);
-console.log(ethers.Wallet.createRandom().mnemonic.phrase);
+const wallet = ethers.Wallet.createRandom();
+console.log(wallet.privateKey);
+console.log(wallet.address)

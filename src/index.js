@@ -11,6 +11,7 @@ import Routing from './components/Router.js';
 import ImportWallet from './components/importWallet.js';
 import History from './components/History.js';
 import Welcome from './components/welcome.js';
+import AddAccount from './components/addAccount.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
       <Route path='/importwallet' element={<ImportWallet />}></Route>
       <Route path='/history' element ={<History />}></Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/addaccount" element={<AddAccount />}></Route>
     </Routes>
     
   </Router>
