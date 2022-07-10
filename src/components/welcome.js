@@ -3,7 +3,7 @@ import Logo from "./Logo.js";
 import Contact from "./Contact.js";
 import { flex } from "./Login.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Button, Row, Col, Alert, FormControl } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
@@ -16,7 +16,6 @@ export default function Welcome(){
     const [pass, setPass] = useState("");
     useEffect(() => {
         const keys = JSON.parse(storage.getItem("erdstall"));
-        console.log(keys);
         if (keys === null){
             navigate('/login');
             
@@ -24,10 +23,10 @@ export default function Welcome(){
             setPass(keys["password"]);
         }
         const time = storage.getItem('loggedIn');
-        console.log(time);
+       
         if ((new Date().getTime() - time) < 30*60*1000 && time !== null){
-            console.log("okay")
-            navigate("/home")
+            
+            navigate('/home', {state:{'reload': true}});
         } else {
             storage.removeItem("loggedIn");
         }

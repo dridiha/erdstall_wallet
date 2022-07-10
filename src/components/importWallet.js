@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 import { ethers } from "ethers";
-import { Row, Col,  Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
@@ -13,12 +13,16 @@ export default function ImportWallet(){
     const passphrase = useRef('');
     const password = useRef('');
     const [disabled, setDisabled] = useState(true);
+    const [alert, setAlert] = useState(false);
     
     let storage = localStorage;
     let navigate = useNavigate();
     return(
         <div style={flex}>
-            <Logo />
+            <Logo goBack={true} redirect={"/login"}/>
+            { alert &&
+                <Alert className='ps-2 w-50' variant='danger'>Failed to import wallet !</Alert>
+            }
             <Form>
                 <Form.Group>
                    <Form.Control
@@ -70,7 +74,8 @@ export default function ImportWallet(){
                                     'password': password.current,
                                     'accounts': accounts,
                                     'active': account,
-                                    'mnemonic': wallet.mnemonic.phrase
+                                    'mnemonic': wallet.mnemonic.phrase,
+                                    'init': false
                                     
                                 }
                                 const transactions = [];
@@ -79,7 +84,7 @@ export default function ImportWallet(){
                                 storage.setItem('loggedIn', new Date().getTime());
                                 navigate('/home');
                             } catch(err){
-                               console.log(err);
+                               setAlert(true);
                             }
                             
                             

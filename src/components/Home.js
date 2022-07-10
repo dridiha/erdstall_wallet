@@ -1,8 +1,8 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "./Logo.js";
 import { ethers, utils } from "ethers";
 import Contact from "./Contact.js";
-import { Row, Col, Button , Toast} from "react-bootstrap";
+import { Row, Col, Button} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaCopy, FaFileExport} from "react-icons/fa/index.esm.js";
 import {BsDot} from "react-icons/bs/index.esm.js"
@@ -10,7 +10,7 @@ import exportFromJSON from "export-from-json";
 import { Session } from "@polycrypt/erdstall/session";
 import { Address } from  "@polycrypt/erdstall/address";
 import { flex } from "./Login.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc/index.esm.js"
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
@@ -26,12 +26,19 @@ export default function Home(){
     
     let navigate = useNavigate();
     let storage = localStorage;
+    let location = useLocation();
+
+    let reload = false;
+    if (location.state !== null && location.state.reload){
+        reload = true;
+    }
+
   
 
     const [balance, setBalance] = useState('');
-    const prn = useRef('');
-    const ether = useRef('');
-    const token = useRef('PRN');
+    const [prn, setPrn] = useState('');
+    const [ether, setEther] = useState('');
+    const [token, setToken] = useState('PRN');
 
     const keys = JSON.parse(storage.getItem('erdstall'));
 
@@ -40,10 +47,8 @@ export default function Home(){
     const wallet = new ethers.Wallet(keys["active"]['privateKey'])
                .connect(ethProvider);
     const className = "border-bottom border-primary";
-    const borderEther = useRef('');
-    const borderPrn = useRef(className);
-    // const [borderEther, setBorderEther] = useState("");
-    // const [borderPrn, setBorderPrn] = useState(className);
+    const [borderEther, setBorderEther] = useState("");
+    const [borderPrn, setBorderPrn] = useState(className);
     
     useEffect(() => {
         storage.setItem('loggedIn', new Date().getTime());
@@ -51,43 +56,44 @@ export default function Home(){
     
     useEffect(() => {
         async function getBalance(){
-            const address = Address.fromString(wallet.address);
-            console.log("Address", address);
-            const session = new Session(address, wallet, new URL("wss://operator.goerli.erdstall.dev:8401/ws"));
-            console.log("session created");
-            await session.initialize();
-            console.log("initialized");
-            await session.onboard();
-            console.log("onboarded");
-            session.getAccount(address).then(res => {
-                try{
-                    console.log(res);
-                    let val = utils.formatEther(res.values.values.get(PERUN_TOKEN).value);
-                    prn.current = val;
-                   
-                    //setPrn(val);
-                    setBalance(val);
-                } catch(err){
-                    prn.current = '0.0'
-                    
-                    // setPrn("0.0");
-                    setBalance("0.0"); 
-                }
-                
-                try {
-                    let val = res.values.values.get(ETHER).value;
-                    ether.current = utils.formatEther(val);
-                    //setEther(utils.formatEther(val));
-                } catch(Error){
-                    ether.current = '0.0';
-                    // setEther("0.0");
-                }
-                
-            }).catch(err => {
-                console.log(err);
-            });
+            if (!keys['init'] || reload){
 
             
+                const address = Address.fromString(wallet.address);
+                console.log("Address", address);
+                const session = new Session(address, wallet, new URL("wss://operator.goerli.erdstall.dev:8401/ws"));
+                await session.initialize();
+                session.getAccount(address).then(res => {
+                    try{
+                        console.log(res);
+                        let val = utils.formatEther(res.values.values.get(PERUN_TOKEN).value);
+                        setPrn(val);
+                        setBalance(val);
+                    } catch(err){
+                        setPrn("0.0");
+                        setBalance("0.0"); 
+                    }
+                    
+                    try {
+                        let val = res.values.values.get(ETHER).value;
+                        setEther(utils.formatEther(val));
+                    } catch(Error){
+                        
+                        setEther("0.0");
+                    }
+                    
+                }).catch(err => {
+                    console.log(err);
+                });
+                if (!keys['init']){
+                    keys['init'] = true;
+                    storage.setItem('erdstall', JSON.stringify(keys));
+                } else {
+                    location.state.reload = false;
+                }
+
+            
+            }
         }
         getBalance();
         
@@ -176,15 +182,13 @@ export default function Home(){
                         Assets
                     </Col>
                     <Col
-                        className={borderPrn.current}  
+                        className={borderPrn}  
                         onClick={() => {
-                            console.log(prn.current);
-                            token.current = 'PRN';
-                            borderPrn.current = className;
-                            borderEther.current = "";
-                            setBalance(prn.current);
-                            // setBorderPrn(className);
-                            // setBorderEther("")
+                            console.log("prn");
+                            setToken('PRN');
+                            setBalance(prn);
+                            setBorderPrn(className);
+                            setBorderEther("");
                             
                         }} 
                         style={{cursor: 'pointer', marginLeft: '7%'}}>
@@ -192,17 +196,14 @@ export default function Home(){
                     </Col>
                     
                     <Col
-                        className={borderEther.current}
+                        className={borderEther}
                         onClick={() => {
                             
-                            // balance.current = ether.current;
-                            token.current = 'ETH';
-                            borderPrn.current = "";
-                            borderEther.current = className;
-                            setBalance(ether.current);
-                            //setToken("ETH")
-                            // setBorderPrn("");
-                            // setBorderEther(className);
+                            console.log("ether");
+                            setBalance(ether);
+                            setToken("ETH")
+                            setBorderPrn("");
+                            setBorderEther(className);
                         }} 
                         style={{cursor: 'pointer', marginLeft:'10%'}}>
                         Ether
@@ -217,7 +218,7 @@ export default function Home(){
                         {balance}
                     </Col>
                     <Col>
-                        {token.current}
+                        {token}
                     </Col>
 
                 </Row>

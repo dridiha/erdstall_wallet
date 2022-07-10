@@ -39,7 +39,7 @@ export default function Logo(props) {
                         if (keys['active']['privateKey'] !== element['privateKey']) {
                             keys['active'] = element
                             storage.setItem('erdstall',JSON.stringify(keys));
-                            navigate('/home');
+                            navigate('/home', {state:{'reload': true}})
                         }
                         
                     }}
@@ -72,7 +72,7 @@ export default function Logo(props) {
                         color={'#0072B5'}
                         style={{cursor:'pointer'}}
                         onClick={() => {
-                            navigate('/home');
+                            navigate(props.redirect, {state:{'reload': true}});
                         }}
                     >
 

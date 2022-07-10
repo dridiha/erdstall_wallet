@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import { ethers } from "ethers";
-import { Row, Col,  Button, Form, FormControl, Alert } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
@@ -20,7 +20,6 @@ export default function AddAccount() {
     const add = () => {
         
         if (name !== '' && privateKey.current !== '') {
-            console.log("input validated");
             try {
                 const keys = JSON.parse(storage.getItem('erdstall'));
                 let isHere = false;
@@ -34,9 +33,8 @@ export default function AddAccount() {
                 if (isHere){
                     setText("The private Key is already added to your wallet !")
                 } else {
-                    console.log("everything ok");
                     const wallet = new ethers.Wallet(privateKey.current);
-                    console.log(wallet);
+
                     const account = {
                         'name' : name.current,
                         'privateKey': wallet.privateKey,
@@ -45,7 +43,7 @@ export default function AddAccount() {
                     keys['accounts'].push(account);
                     keys['active'] = account;
                     storage.setItem('erdstall', JSON.stringify(keys));
-                    navigate('/home')
+                    navigate('/home', {state:{'reload': true}})
                 }
                 
 
@@ -59,7 +57,7 @@ export default function AddAccount() {
     }
     return (
         <div style={flex}>
-            <Logo goBack={true}/>
+            <Logo goBack={true} redirect={"/home"}/>
             {alert &&
                 <Alert variant="danger">{text}</Alert> 
             }

@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import { ethers } from "ethers";
-import { Row, Col,  Button, Form, FormControl, Alert } from "react-bootstrap";
+import { Row, Col,  Button, Form, FormControl} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo.js";
 import Contact from "./Contact.js";
@@ -43,8 +43,8 @@ export default function CreateWallet() {
     const [arr, setArr] = useState([]);
     
     const transactions = [] 
-   let navigate = useNavigate();
-   let storage = localStorage;
+    let navigate = useNavigate();
+    let storage = localStorage;
    
  
    
@@ -127,7 +127,8 @@ export default function CreateWallet() {
                                     'password': password.current,
                                     'accounts': accounts,
                                     'active': account,
-                                    'mnemonic': wallet.current.mnemonic.phrase
+                                    'mnemonic': wallet.current.mnemonic.phrase,
+                                    'init': false
                                     
                                 }
                                 storage.setItem('erdstall', JSON.stringify(json))

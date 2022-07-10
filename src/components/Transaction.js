@@ -19,7 +19,7 @@ export default function Transaction(props) {
     });
     return(
         <div style={flex}>
-            <Logo goBack={true}/>
+            <Logo goBack={true} redirect={"/home"}/>
             <Form className="ms-5">
                 <Form.Group>
                     <Row className="w-100">

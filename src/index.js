@@ -7,7 +7,6 @@ import Home from './components/Home.js';
 import CreateWallet from './components/createWallet.js';
 import Transaction from './components/Transaction.js';
 import Description from './components/Description.js';
-import Routing from './components/Router.js';
 import ImportWallet from './components/importWallet.js';
 import History from './components/History.js';
 import Welcome from './components/welcome.js';

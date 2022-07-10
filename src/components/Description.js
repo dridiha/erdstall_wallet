@@ -55,11 +55,10 @@ export default function Description(){
         else {
             setAlert(false);
             const address = Address.fromString(wallet.address);
-            console.log("Address", address);
+            
             const session = new Session(address, wallet, new URL("wss://operator.goerli.erdstall.dev:8401/ws"));
-            console.log("session created");
+            
             await session.initialize();
-            console.log("initialized");
             
             const asset = new Assets(
                     {
@@ -88,8 +87,6 @@ export default function Description(){
                     transactions.push(transaction);
                     storage.setItem('transactions', JSON.stringify(transactions));
                     
-                    console.log("accepted");
-                    console.log(value);
                     setTimeout(()=>{
                         navigate("/home");
                     }, 3000)
@@ -107,7 +104,7 @@ export default function Description(){
     }
     return(
         <div style={flex}>
-            <Logo goBack={true}/>
+            <Logo goBack={true} redirect={"/home"}/>
             {alert && <div>
                 <Alert className='ps-2' variant={variant}>{text}</Alert>
             </div>}

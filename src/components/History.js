@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
-import Logo from "./Logo.js";
-import Contact from "./Contact.js";
+import React, { useEffect } from "react";
+
 import { flex } from "./Login.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Button, Row, Col, Alert, FormControl } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { IoMdArrowBack } from "react-icons/io/index.esm.js"
 import { useNavigate } from "react-router-dom";
 
@@ -42,7 +41,7 @@ export default function History() {
                         color={'#0072B5'}
                         style={{cursor:'pointer'}}
                         onClick={() => {
-                            navigate('/home');
+                            navigate('/home', {state:{'reload': true}});
                         }}
                     >
 
