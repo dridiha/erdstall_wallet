@@ -6,6 +6,7 @@ import {BsThreeDotsVertical} from "react-icons/bs/index.esm.js"
 import exportFromJSON from "export-from-json";
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { IoMdArrowBack } from "react-icons/io/index.esm.js"
 
 
 
@@ -63,14 +64,30 @@ export default function Logo(props) {
     
     return(
         <Row className={className} style={style}>
-            <Col className="ms-3">
+            {(props.goBack) &&
+                <Col className='mt-4 ms-1'xs={2}>
+                    <IoMdArrowBack 
+                        className="border border-dark rounded-pill mt-1"
+                        size={25}
+                        color={'#0072B5'}
+                        style={{cursor:'pointer'}}
+                        onClick={() => {
+                            navigate('/home');
+                        }}
+                    >
+
+                    </IoMdArrowBack>
+                </Col>
+            }
+            <Col className="ms-4" xs={8}>
                 <Image src='https://polycry.pt/wp-content/uploads/2022/02/Screenshot-2022-01-24-131338.png' alt='Erdstall'
                     
                 >
                 </Image>
             </Col>
+            
             {(props.menu) && 
-                <Col className="mt-4 ms-5" xs={3} >
+                <Col className="mt-4" xs={2} >
                     <Dropdown>
                         <Dropdown.Toggle id="toogle" style={buttonStyle}>
                             <BsThreeDotsVertical
@@ -101,7 +118,11 @@ export default function Logo(props) {
                                           {
                                             label: 'Yes',
                                             onClick: () => {
-                                                const data = props.accounts;
+                                                const data = [
+                                                    {"mnemonic":props.mnemonic},
+                                                    props.accounts
+                                                     
+                                                ]
                                                 const exportType = exportFromJSON.types.json;
                                                 const fileName = "wallet_keys";
                                                 exportFromJSON({data, fileName, exportType});

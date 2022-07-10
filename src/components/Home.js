@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Logo from "./Logo.js";
 import { ethers, utils } from "ethers";
 import Contact from "./Contact.js";
@@ -18,7 +18,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 
 
 
-export const PERUN_TOKEN = "0xefe8ef63995fb083502c6b2bd01871e084c8ab82";
+export const PERUN_TOKEN = "0xc35a99b1b5b10000e1aaf8ca83873e81eec71d72";
 export const ETHER = "0x0000000000000000000000000000000000000000"
 
 
@@ -29,9 +29,9 @@ export default function Home(){
   
 
     const [balance, setBalance] = useState('');
-    const [prn, setPrn] = useState('');
-    const [ether, setEther] = useState('');
-    const [token, setToken] = useState('PRN');
+    const prn = useRef('');
+    const ether = useRef('');
+    const token = useRef('PRN');
 
     const keys = JSON.parse(storage.getItem('erdstall'));
 
@@ -40,8 +40,10 @@ export default function Home(){
     const wallet = new ethers.Wallet(keys["active"]['privateKey'])
                .connect(ethProvider);
     const className = "border-bottom border-primary";
-    const [borderEther, setBorderEther] = useState("");
-    const [borderPrn, setBorderPrn] = useState(className);
+    const borderEther = useRef('');
+    const borderPrn = useRef(className);
+    // const [borderEther, setBorderEther] = useState("");
+    // const [borderPrn, setBorderPrn] = useState(className);
     
     useEffect(() => {
         storage.setItem('loggedIn', new Date().getTime());
@@ -61,18 +63,24 @@ export default function Home(){
                 try{
                     console.log(res);
                     let val = utils.formatEther(res.values.values.get(PERUN_TOKEN).value);
-                    setPrn(val);
+                    prn.current = val;
+                   
+                    //setPrn(val);
                     setBalance(val);
                 } catch(err){
-                    setPrn("0.0");
+                    prn.current = '0.0'
+                    
+                    // setPrn("0.0");
                     setBalance("0.0"); 
                 }
                 
                 try {
                     let val = res.values.values.get(ETHER).value;
-                    setEther(utils.formatEther(val));
+                    ether.current = utils.formatEther(val);
+                    //setEther(utils.formatEther(val));
                 } catch(Error){
-                    setEther("0.0");
+                    ether.current = '0.0';
+                    // setEther("0.0");
                 }
                 
             }).catch(err => {
@@ -85,7 +93,7 @@ export default function Home(){
         
         
         
-    },[])
+    },[wallet])
     
        
     
@@ -93,7 +101,7 @@ export default function Home(){
     const addr = wallet.address.substring(0,10) + "......" + wallet.address.substring(wallet.address.length- 10, wallet.address.length);
     return(
         <div style={flex}>
-            <Logo menu={true} accounts={keys['accounts']}/>
+            <Logo menu={true} accounts={keys['accounts']} mnemonic={keys['mnemonic']}/>
             <div className="rounded mt-0 shadow-lg w-100" style={{backgroundColor:"#c1cdcd"}}>
                 <Row className="ms-5 rounded">
                     <Col className='mb-2 mt-3 ms-3 me-5 p-'>
@@ -132,13 +140,13 @@ export default function Home(){
                                         onClick={() => {
                                             confirmAlert({
                                 
-                                                message: 'Are you sure you want to export all of your keys ?',
+                                                message: 'Are you sure you want to export this key ?',
                                                 buttons: [
                                                   {
                                                     label: 'Yes',
                                                     onClick: () => {
                                                         const data = [{
-                                                            publicKey: wallet.publicKey,
+                                                            address: wallet.address,
                                                             privateKey: wallet.privateKey
                                                         }];
                                                         const fileName = wallet.publicKey.substring(0, 15);
@@ -168,12 +176,15 @@ export default function Home(){
                         Assets
                     </Col>
                     <Col
-                        className={borderPrn}  
+                        className={borderPrn.current}  
                         onClick={() => {
-                            setBalance(prn);
-                            setToken("PRN");
-                            setBorderPrn(className);
-                            setBorderEther("")
+                            console.log(prn.current);
+                            token.current = 'PRN';
+                            borderPrn.current = className;
+                            borderEther.current = "";
+                            setBalance(prn.current);
+                            // setBorderPrn(className);
+                            // setBorderEther("")
                             
                         }} 
                         style={{cursor: 'pointer', marginLeft: '7%'}}>
@@ -181,12 +192,17 @@ export default function Home(){
                     </Col>
                     
                     <Col
-                        className={borderEther}
+                        className={borderEther.current}
                         onClick={() => {
-                            setBalance(ether);
-                            setToken("ETH")
-                            setBorderPrn("");
-                            setBorderEther(className);
+                            
+                            // balance.current = ether.current;
+                            token.current = 'ETH';
+                            borderPrn.current = "";
+                            borderEther.current = className;
+                            setBalance(ether.current);
+                            //setToken("ETH")
+                            // setBorderPrn("");
+                            // setBorderEther(className);
                         }} 
                         style={{cursor: 'pointer', marginLeft:'10%'}}>
                         Ether
@@ -201,7 +217,7 @@ export default function Home(){
                         {balance}
                     </Col>
                     <Col>
-                        {token}
+                        {token.current}
                     </Col>
 
                 </Row>

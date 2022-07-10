@@ -18,6 +18,8 @@ export default function Description(){
     
    
     const [alert, setAlert] = useState(false);
+    const [text, setText] = useState('');
+    const [variant, setVariant] = useState('');
     const pass = useRef(); 
     
     const tokens = {
@@ -27,13 +29,13 @@ export default function Description(){
     let location = useLocation();
     let storage = localStorage;
     let navigate = useNavigate();
-    console.log("ok...");
+    
 
     const keys = JSON.parse(storage.getItem('erdstall'));
-
+    const active = keys['active'];
     const ethRpcUrl = "ws://10.100.81.101:30313";
     const ethProvider = new ethers.providers.JsonRpcProvider(ethRpcUrl)
-    const wallet = ethers.Wallet.fromMnemonic(keys["mnemonic"])
+    const wallet = new ethers.Wallet(active['privateKey'])
                .connect(ethProvider);
     
     
@@ -43,9 +45,12 @@ export default function Description(){
         storage.setItem('loggedIn', new Date().getTime());
     }); 
     async function confirmTransaction() {
-        console.log("test")
+    
         if (pass.current !== password){
+            setText('Password is incorrect !')
+            setVariant('danger')
             setAlert(true);
+            
         }
         else {
             setAlert(false);
@@ -66,7 +71,9 @@ export default function Description(){
             let time = new Date().toLocaleString();
             await session.transferTo(asset, destAddress).then(res => {
                 res.accepted.then(value => {
-                    window.alert("Transaction successful !")
+                    setText('Transaction successful, redirecting to home page ...')
+                    setVariant('success')
+                    setAlert(true);
                     const hash = value.hash;
                     
                     const transaction = {
@@ -85,20 +92,26 @@ export default function Description(){
                     console.log(value);
                     setTimeout(()=>{
                         navigate("/home");
-                    }, 5)
+                    }, 3000)
                 })
             }).catch(err => {
-                console.log("Error in transaction");
+                setText('Transaction failed ! retry later !')
+                setVariant('danger')
+                setAlert(true);
+                setTimeout(()=>{
+                    navigate("/home");
+                }, 2);
             })
         } 
 
     }
     return(
         <div style={flex}>
-            <Logo />
+            <Logo goBack={true}/>
             {alert && <div>
-                <Alert variant='danger'>Password is incorrect !</Alert>
+                <Alert className='ps-2' variant={variant}>{text}</Alert>
             </div>}
+
             <div className="border border-dark rounded shadow-lg w-100 ms-2">
                 <Row className='p-2 m-2'>
                     <b className="text-primary">Your Transaction </b>

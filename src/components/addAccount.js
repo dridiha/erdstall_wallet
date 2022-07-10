@@ -59,7 +59,7 @@ export default function AddAccount() {
     }
     return (
         <div style={flex}>
-            <Logo/>
+            <Logo goBack={true}/>
             {alert &&
                 <Alert variant="danger">{text}</Alert> 
             }

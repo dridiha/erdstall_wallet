@@ -16,7 +16,7 @@ const showhistory = (transactions) => {
         tmp.push(<Col xs={6} className='pt-2' key={Math.floor(Math.random() * 10000)}>{destAdd}</Col>)
         tmp.push(<Col xs={2} className='pt-2' key={Math.floor(Math.random() * 10000)}>{tx['amount']}</Col>)
         tmp.push(<Col xs={4} className='pt-2' key={Math.floor(Math.random() * 10000)}>{tx['time']}</Col>)
-        arr.push(<Row className="border border-dark rounded-pill shadow-lg mt-4 ms-2" key={Math.floor(Math.random() * 10000)}>{tmp}</Row>)
+        arr.push(<Row className="border-top border-bottom border-dark shadow-lg mt-4 ms-2" key={Math.floor(Math.random() * 10000)}>{tmp}</Row>)
     });
     return arr;
 }

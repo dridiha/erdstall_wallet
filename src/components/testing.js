@@ -28,6 +28,9 @@ import { Amount } from "@polycrypt/erdstall/amount";
 //     console.log(utils.formatEther(prn));
 // });
 // console.log(session.tokenProvider);
-const wallet = ethers.Wallet.createRandom();
+let wallet = ethers.Wallet.fromMnemonic("noise axis utility traffic garden afford pelican quote category flash immune ceiling");
+console.log(wallet.privateKey);
+console.log(wallet.address)
+wallet = ethers.Wallet.fromMnemonic("hill dress spend purity bless bullet roast alarm cart draft hedgehog supply");
 console.log(wallet.privateKey);
 console.log(wallet.address)

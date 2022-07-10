@@ -57,7 +57,8 @@ export default function ImportWallet(){
                         className='mt-5 mb-5 shadow-lg w-100'
                         onClick={() => {
                             try{
-                                const wallet = ethers.Wallet.fromMnemonic(passphrase);
+                            
+                                const wallet = ethers.Wallet.fromMnemonic(passphrase.current);
                                 const account = {
                                     'name': 'main',
                                     'privateKey': wallet.privateKey,
@@ -72,7 +73,9 @@ export default function ImportWallet(){
                                     'mnemonic': wallet.mnemonic.phrase
                                     
                                 }
+                                const transactions = [];
                                 storage.setItem('erdstall' ,JSON.stringify(keys));
+                                storage.setItem('transactions', JSON.stringify(transactions));
                                 storage.setItem('loggedIn', new Date().getTime());
                                 navigate('/home');
                             } catch(err){
