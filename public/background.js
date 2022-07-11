@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener((req) => {
             console.log(tabs[0])
             if(tabs.length == 0){
                 chrome.windows.create({
-                    url: "popup.html", 
+                    url: "index.html", 
                     type: "popup",
                     height : 580, 
                     width : 450, 

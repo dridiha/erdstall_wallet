@@ -88,16 +88,16 @@ export default function Description(){
                     storage.setItem('transactions', JSON.stringify(transactions));
                     
                     setTimeout(()=>{
-                        navigate("/home");
-                    }, 3000)
+                        navigate("/home",{state:{'reload': true}});
+                    }, 5000)
                 })
             }).catch(err => {
                 setText('Transaction failed ! retry later !')
                 setVariant('danger')
                 setAlert(true);
-                setTimeout(()=>{
-                    navigate("/home");
-                }, 2);
+                setTimeout(()=> {
+                    navigate("/home", {state:{'reload': true}});
+                }, 3);
             })
         } 
 

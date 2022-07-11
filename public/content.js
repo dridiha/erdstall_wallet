@@ -1,4 +1,4 @@
-const positionX = window.screenLeft + (window.outerWidth - 500);
+const positionX = window.screenLeft + (window.outerWidth - 450);
 const positionY =  window.screenTop
 
 console.log(typeof positionX)
