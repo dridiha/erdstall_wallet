@@ -5,7 +5,7 @@ import { flex } from "./Login.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Address } from  "@polycrypt/erdstall/address";
+
 
 export default function Transaction(props) {
     
