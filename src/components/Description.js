@@ -60,45 +60,59 @@ export default function Description(){
             
             await session.initialize();
             
-            const asset = new Assets(
+            
+            try {
+                const asset = new Assets(
                     {
                         token: tokens[location.state.token],
                         asset: new Amount(location.state.amount)
                     }
-            );
-            const destAddress = Address.fromString(location.state.destinationAddress);
-            let time = new Date().toLocaleString();
-            await session.transferTo(asset, destAddress).then(res => {
-                res.accepted.then(value => {
-                    setText('Transaction successful, redirecting to home page ...')
-                    setVariant('success')
+                );
+                const destAddress = Address.fromString(location.state.destinationAddress);
+                let time = new Date().toLocaleString();
+                await session.transferTo(asset, destAddress).then(res => {
+                    res.accepted.then(value => {
+                        setText('Transaction successful, redirecting to home page ...')
+                        setVariant('success')
+                        setAlert(true);
+                        const hash = value.hash;
+                        
+                        const transaction = {
+                            'hash': hash,
+                            'destination address': location.state.destinationAddress,
+                            'amount': `${location.state.amount} ${location.state.token}`,
+                            'time': time
+                        }
+                        let transactions = JSON.parse(storage.getItem('transactions'));
+                        
+                        
+                        transactions.push(transaction);
+                        storage.setItem('transactions', JSON.stringify(transactions));
+                        
+                        setTimeout(()=>{
+                            navigate("/home",{state:{'reload': true}});
+                        }, 5000)
+                    })
+                }).catch(err => {
+                    setText('Transaction failed ! retry later !')
+                    setVariant('danger')
                     setAlert(true);
-                    const hash = value.hash;
-                    
-                    const transaction = {
-                        'hash': hash,
-                        'destination address': location.state.destinationAddress,
-                        'amount': `${location.state.amount} ${location.state.token}`,
-                        'time': time
-                    }
-                    let transactions = JSON.parse(storage.getItem('transactions'));
-                    
-                    
-                    transactions.push(transaction);
-                    storage.setItem('transactions', JSON.stringify(transactions));
-                    
-                    setTimeout(()=>{
-                        navigate("/home",{state:{'reload': true}});
-                    }, 5000)
-                })
-            }).catch(err => {
-                setText('Transaction failed ! retry later !')
+                    setTimeout(()=> {
+                        navigate("/home", {state:{'reload': true}});
+                    }, 3000);
+            })
+
+
+            } catch(error){
+                setText('Error ! Transaction failed !');
                 setVariant('danger')
                 setAlert(true);
                 setTimeout(()=> {
                     navigate("/home", {state:{'reload': true}});
-                }, 3);
-            })
+                }, 3000)
+            }
+            
+            
         } 
 
     }
